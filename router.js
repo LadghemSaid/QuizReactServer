@@ -14,6 +14,7 @@ router
     extended: true
   })) // for parsing application/x-www-form-urlencoded
     .get('/quizz', (req, res) => {
+        console.log("Récuperation de tous les quizz");
     Quizz.find({})
         .exec((err, data) => {
             if (err)
@@ -24,7 +25,7 @@ router
             res.json(data);
         })
 }).get("/getquizz/:id", (req, res) => {
-    console.log("Dans le router");
+    console.log("Récuperation d'un quizz");
         let uid = parseInt(req.params.id);
     //console.log(uid);
         Quizz.findOne(
@@ -39,6 +40,24 @@ router
         else
             res.json(data);
           //  console.log("server",data);
+    })
+}).post("/addquizz/", (req, res) => {
+    console.log("Ajout d'un quizz");
+
+    let uid = parseInt(req.params.id);
+    //console.log(uid);
+    Quizz.insert(
+        {
+            _uid: 1
+
+        }
+    ).exec((err, data) => {
+        // console.log(data,err);
+        if (err)
+            return res.status(500).send(err);
+        else
+            res.json(data);
+        //  console.log("server",data);
     })
 })
     .use((req, res) => {
